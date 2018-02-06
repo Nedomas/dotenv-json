@@ -12,7 +12,8 @@ module.exports = function dotenvJSON(options) {
     const envConfig = JSON.parse(jsonString);
 
     for (const key in envConfig) {
-      process.env[key] = process.env[key] || envConfig[key];
+      const value = process.env[key] || envConfig[key];
+      process.env[key] = typeof value == "string" ? value : JSON.stringify(value);
     }
   } catch (err) {
     console.error(err);
